@@ -1,0 +1,48 @@
+extends layout
+
+block content
+	div.container
+	h2 Dataset Search 
+	table.table(class="#{type}").width800 
+		thead
+			th TaskID
+			th RequestID
+			th TaskName
+			th TaskStatus
+			th Dataset Name
+			th PhysGroup
+			th PhysCategory
+			th Campaign:Subcampaign
+			th Hashtags
+			th StepName
+			th ProjectName
+			th TaskTimestamp
+			th Description
+			th TRF Release
+			th Geometry
+			th ConditionsTags
+			th SW Release
+			th Requested Events
+			th Processed Events
+		tbody
+			each item in hits
+				tr
+					td= item._source.taskid
+					td= item._source.pr_id
+					td= item._source.taskname
+					td= item._source.status
+					td= item._source.datasetname
+					td= item._source.phys_group
+					td= item._source.phys_category
+					td= item._source.campaign
+					td= item._source.hashtag_list
+					td= item._source.step_name
+					td= item._source.project
+					td= item._source.task_timestamp
+					td= item._source.description
+					td= item._source.trf_release
+					td= item._source.geometry
+					td= item._source.conditions_tags
+					td= item._source.sw_release
+					td= item._source.requested_events
+					td= item._source.processed_events
