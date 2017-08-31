@@ -4,7 +4,7 @@ var elasticsearch = require('elasticsearch');
 
 var client = new elasticsearch.Client({
 	host: 'http://144.206.234.84:9200',
-	httpAuth: 'u:p',
+	httpAuth: 'esuser:on5xo3voo0aethoe4taY',
 	log: 'trace'
 });
 // var client = new elasticsearch.Client({
@@ -12,7 +12,12 @@ var client = new elasticsearch.Client({
 // 	log: 'trace'
 // });
 
-router.get('/dataset_search', function(req, res, next) {
+router.get('/search_form', function(req, res, next) {
+	res.render('search_form', { title: 'Express'});
+});
+
+router.post('/dataset_search', function(req, res, next) {
+	console.log(req.body);
 	var dataset_search = {
 	  	"query": {
 	     "bool": {

@@ -17,6 +17,16 @@ table.width400 {
   width: 400px;
 }
 
+.table th, .table td {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 12px;
+}
+
+.table th {
+  font-weight: 600; 
+}
+
 .navbar {
 	background-color: #07150F;
 }

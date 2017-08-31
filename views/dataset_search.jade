@@ -3,83 +3,89 @@ extends layout
 block content
 	div.container
 	h2 Dataset Search 
-	table.table(class="#{type}").width800 
-		tbody
-			each item in hits
-				tr
-					td(colspan=6) TASK
-				tr
-					td TaskID
-					td= item._source.taskid
-					td TaskName
-					td= item._source.taskname
-					td ''
-					td ''
-				tr 
-					td TaskStatus
-					td= item._source.status
-					td description
-					td= item._source.description
-					td ''
-					td ''
-				tr
-					td TaskTimestamp
-					td= item._source.task_timestamp
-					td Start Time
-					td= item._source.start_time
-					td End Time
-					td= item._source.end_time
-				tr
-					td(colspan=4) DATASETS
-				tr
-					td Input Datasets
-					td= item._source.input_datasets
-				tr
-					td Output Datasets
-					td= item._source.output_datasets
-				
-				tr 
-					td PhysGroup
-					td= item._source.phys_group
-				tr
-					td PhysCategory
-					td= item._source.phys_category
-				tr
-					td Campaign:Subcampaign
-					td= item._source.campaign
-				tr
-					td Hashtags
-					td= item._source.hashtag_list
-				tr
-					td StepName
-					td= item._source.step_name
-				tr
-					td ProjectName
-					td= item._source.project
-				tr
-					td architecture
-					td= item._source.architecture
-				tr
-					td conditions_tags
-					td= item._source.conditions_tags
-				tr
-					td geometry_version
-					td= item._source.geometry_version
-				tr
-					td trans_path
-					td= item._source.trans_path
-				tr
-					td trans_home
-					td= item._source.trans_home
-				tr
-					td trigger_config
-					td= item._source.trigger_config	
-				tr
-					td run_number
-					td= item._source.run_number	
-				tr
-					td ticket_id
-					td= item._source.ticket_id	
-				tr
-					td ''
-					td ''
+	each item in hits
+		table.table(border="1", class="table-datasets", style="width=800")
+			tbody
+					tr
+						th(colspan=8, style="background-color: rgb(124,112,107); text-align: center;") TASK
+					tr
+						th(style="width:8%;") taskID 
+						td(style="width:8%;")= item._source.taskid
+						th(style="width:8%;") taskName
+						td(colspan=5, style="width:78%;")= item._source.taskname
+					tr
+						th Description
+						td(colspan=7)= item._source.description	
+					tr
+						th(style="width:8%;") status
+						td(style="width:8%;")= item._source.status
+						th(style="width:8%;") timestamp
+						td(style="width:18%;")= item._source.timestamp	
+						th(style="width:10%;") start time
+						td(style="width:16%;")= item._source.start_time
+						th(style="width:12%;") end time
+						td(style="width:15%;")= item._source.end_time		
+					tr 
+						th(colspan=8, style="background-color: rgb(44,130,201); text-align: center;") EVENTS
+					tr
+						th Requested Events
+						td= item._source.requested_events
+						th Processed Events
+						td= item._source.processed_events
+						th Done(%)
+						td= (item._source.processed_events * 100) / item._source.requested_events
+					tr
+						th(colspan=8, style="background-color: rgb(44,130,201); text-align: center;") DATASETS	
+					tr
+						th Input Datasets
+						td(colspan=7, style="width: 91%")= item._source.input_datasets
+					tr
+						th Output Datasets
+						td(colspan=7, style="width: 91%")= item._source.output_datasets
+					tr
+						th(colspan=8, style="background-color: rgb(209,213,216); text-align: center;") EXPERIMENT
+					tr
+						th Campaign
+						td= item._source.campaign
+						th Subcampaign
+						td= item._source.subcampaign	
+						th Project
+						td= item._source.project
+						th Energy
+						td= item._source.energy	
+					tr
+						th Physics Group
+						td= item._source.phys_group
+						th Physics Category
+						td= item._source.phys_category
+						th Step Name
+						td= item._source.step_name
+						td
+						td
+					tr
+						th Hashtags
+						td(colspan=7, style="width: 90%")= item._source.hashtag_list
+					tr
+						th(colspan=8, style="background-color: rgb(243,121,52); text-align: center;") CONFIGURATION
+					tr
+						th ATLAS Geometry
+						td= item._source.geometry_version
+						th Conditions Tags
+						td= item._source.conditions_tags
+						th trigger_config
+						td(colspan=3)= item._source.trigger_config	
+					tr
+						th Architecture
+						td= item._source.architecture
+						th Core Number
+						td(colspan=5)= item._source.core_number		
+					tr
+						th ticket_id
+						td(colspan=7)= item._source.ticket_id	
+					tr
+						th trans_path
+						td= item._source.trans_path
+						th trans_home
+						td= item._source.trans_home
+						th run_number
+						td(colspan=3)= item._source.run_number	
