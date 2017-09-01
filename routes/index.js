@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var elasticsearch = require('elasticsearch');
+const moment = require('moment');
 
 var client = new elasticsearch.Client({
 	host: 'http://144.206.234.84:9200',
-	httpAuth: 'user:pwd',
+	httpAuth: 'esuser:on5xo3voo0aethoe4taY',
 	log: 'trace'
 });
 // var client = new elasticsearch.Client({
@@ -17,8 +18,11 @@ router.get('/search_form', function(req, res, next) {
 });
 
 router.post('/dataset_search', function(req, res, next) {
-	console.log(req.body.keywords);
+	// console.log(req.body.keywords);
 	keywords_arr = req.body.keywords.split(',');
+	for (var i = 0; i < keywords_arr.length; i++) {
+		keywords_arr[i] = keywords_arr[i].trim();
+	}
 	var quotedAndSeparated = "\"" + keywords_arr.join("\" AND \"") + "\"";
 
 	// var query_string = {
@@ -33,7 +37,7 @@ router.post('/dataset_search', function(req, res, next) {
 		"query": {
 	    	"query_string": {
 	      		"query": quotedAndSeparated,
-	      	"analyze_wildcard": true
+	      		"analyze_wildcard": true
     		}
     	}
   	};
@@ -43,6 +47,22 @@ router.post('/dataset_search', function(req, res, next) {
 	  "body": query_string
 	}).then(function (resp) {
 	    var hits = resp.hits.hits;
+	    console.log(hits);
+	    for (var index = 0; index < hits.length; ++index) {
+	    	var curr_value = hits[index]['_source'];
+	    	for(var key in curr_value) {
+  				var input_datasets = String(curr_value['input_datasets']).split(',');
+  				var output_datasets = String(curr_value['output_datasets']).split(',');
+  				curr_value['input_datasets'] = input_datasets;
+  				curr_value['output_datasets'] = output_datasets;
+  		// 		let m = moment();   
+  		// 		var start_time = moment(curr_value['start_time'].format('dd-mm-yyyy hh:mi:ss'));
+  		// 		console.log(start_time);
+				// var end_time = new Date(curr_value['end_time']);
+				// var duration = end_time - start_time;
+				// curr_value['duration'] = duration;
+  			}
+	    }
 	    res.render('dataset_search', { title: 'Express', search_query: quotedAndSeparated, hits: hits});
 	}, function (err) {
 	    console.trace(err.message);
