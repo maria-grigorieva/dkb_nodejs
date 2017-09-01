@@ -4,7 +4,7 @@ var elasticsearch = require('elasticsearch');
 
 var client = new elasticsearch.Client({
 	host: 'http://144.206.234.84:9200',
-	httpAuth: 'esuser:on5xo3voo0aethoe4taY',
+	httpAuth: 'user:pwd',
 	log: 'trace'
 });
 // var client = new elasticsearch.Client({
@@ -17,28 +17,33 @@ router.get('/search_form', function(req, res, next) {
 });
 
 router.post('/dataset_search', function(req, res, next) {
-	console.log(req.body);
-	var dataset_search = {
-	  	"query": {
-	     "bool": {
-	        "must": [
-	          {"match" : {"geometry_version" : "ATLAS-R2-2016-00-01-00"}}
-	          // {"match" : {"phys_category.keyword": "Higgs"}}
-	        ]
-	      }
-	    }
-	};
+	console.log(req.body.keywords);
+	keywords_arr = req.body.keywords.split(',');
+	var quotedAndSeparated = "\"" + keywords_arr.join("\" AND \"") + "\"";
 
+	// var query_string = {
+	// 	"query": {
+	//     	"query_string": {
+	//       		"query": "\"ATLAS-R2-2016-00-01-00\" AND \"MC16b\" AND \"BPhysics\"",
+	//       	"analyze_wildcard": true
+ //    		}
+ //    	}
+ //  	};
+  	var query_string = {
+		"query": {
+	    	"query_string": {
+	      		"query": quotedAndSeparated,
+	      	"analyze_wildcard": true
+    		}
+    	}
+  	};
 	client.search({
 	  "index": "prodsys",
 	  "type": "MC16",
-	  "body": dataset_search
+	  "body": query_string
 	}).then(function (resp) {
 	    var hits = resp.hits.hits;
-	    // var aggs = resp.aggregations.category;
-	    console.log(hits);
-	    //console.log(aggs);
-	    res.render('dataset_search', { title: 'Express', hits: hits});
+	    res.render('dataset_search', { title: 'Express', search_query: quotedAndSeparated, hits: hits});
 	}, function (err) {
 	    console.trace(err.message);
 	    res.render('error', { title: 'Express'});

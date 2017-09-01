@@ -3,6 +3,7 @@ extends layout
 block content
 	div.container
 	h2 Dataset Search 
+	h3= search_query
 	each item in hits
 		table.table(border="1", class="table-datasets", style="width=800")
 			tbody
@@ -33,7 +34,7 @@ block content
 						th Processed Events
 						td= item._source.processed_events
 						th Done(%)
-						td= (item._source.processed_events * 100) / item._source.requested_events
+						td= Math.round((item._source.processed_events * 100) / item._source.requested_events) + '%'
 					tr
 						th(colspan=8, style="background-color: rgb(44,130,201); text-align: center;") DATASETS	
 					tr
