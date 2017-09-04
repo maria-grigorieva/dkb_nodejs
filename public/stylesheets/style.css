@@ -3,6 +3,18 @@ body {
   font: Arial, Helvetica, sans-serif;
 }
 
+.taskname {
+    width: 100%;
+    padding: 5px 0;
+    text-align: center;
+    background-color: lightblue;
+    margin-top:5px;
+    display: block;
+}
+
+.total {
+  display: none;
+}
 
 .starter-template {
   padding: 40px 15px;
@@ -12,6 +24,13 @@ body {
 a {
   color: #00B7FF;
 }
+
+input[type="text"],
+textarea {
+    width:800px;
+    height:200px;
+    padding: 3px;
+    }
 
 table.width400 {
   width: 400px;
@@ -69,39 +88,4 @@ ul {
 .span12{
     border:solid 1px black;
     background-color:grey;
-}
-
-.arrowUp {
-  border-top: 12px solid #ddd;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  font-size: 0;
-  line-height: 0;
-  width: 0;
-}
-.arrowDown {
-  border-bottom: 12px solid #ddd;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  font-size: 0;
-  line-height: 0;
-  width: 0;
-}
-.arrowRight {
-  border-left: 12px solid #ddd;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  border-right: 12px solid transparent;
-  font-size: 0;
-  line-height: 0;
-  width: 0;
-}
-.arrowLeft {
-  border-left: 12px solid transparent;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  border-right: 12px solid #ddd;
-  font-size: 0;
-  line-height: 0;
-  width: 0;
 }
